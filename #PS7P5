@@ -1,0 +1,44 @@
+#PS7P5
+#Alexander Kazantzis
+#2-18-26
+
+# Format: LastName DistrictCode Credits, sample text file with student data
+with open("students.txt", "w") as file:
+    file.write("Jones I 12\n")
+    file.write("Adams I 10\n")
+    file.write("Baker 0 12\n")
+    file.write("Smith O 16\n")
+
+# Define tuition rates
+IDistR = 250.00
+ODistR = 500.00
+
+TotTuit = 0
+StuCnt = 0
+
+# Step 3: Read file and process each student
+with open("students.txt", "r") as file:
+    print(f"{'LstNme':<15}{'credits':<10}{'TuitDue':<15}")
+    print("-" * 40)
+    
+    for line in file:
+        LstNme, DistCde, credits_str = line.strip().split()
+        credits = int(credits_str)
+        
+        # Determine rate based on district code
+        if DistCde.upper() == "I":
+            tuition = credits * IDistR
+        else:
+            tuition = credits * ODistR
+        
+        # Display student info
+        print(f"{LstNme:<15}{credits:<10}{tuition:<15.2f}")
+        
+        # Update totals
+        TotTuit += tuition
+        StuCnt += 1
+
+# Step 4: Display totals
+print("-" * 40)
+print(f"Total Tuition Owed: ${TotTuit:.2f}")
+print(f"Number of Students: {StuCnt}")
