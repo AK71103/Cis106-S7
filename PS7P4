@@ -1,0 +1,66 @@
+#PS7P4
+#Alexander Kazantzis
+#2-18-26
+import os
+
+# Step 1: Create a sample text file with item, quantity, and price
+OrdFile = "orders.txt"
+
+# Sample data: item, quantity, price
+sample_data = [
+    "Pen,10,1.50",
+    "Notebook,5,3.20",
+    "Pencil,20,0.80",
+    "Eraser,15,0.50"
+]
+
+# Write sample data to file
+with open(OrdFile, "w") as file:
+    for line in sample_data:
+        file.write(line + "\n")
+
+print(f"File '{OrdFile}' created with sample data.\n")
+
+# Step 2: Read file and process data
+SumExt = 0.0
+OrdCnt = 0
+
+try:
+    with open(OrdFile, "r") as file:
+        print(f"{'ItmNme':<15}{'ItmQty':<10}{'ItmPri':<10}{'SumExt':<12}")
+        print("-" * 50)
+
+        for line in file:
+            line = line.strip()
+            if not line:
+                continue  # Skip empty lines
+
+            try:
+                ItmNme, ItmQty_str, ItmPri_str = line.split(",")
+                ItmQty = int(ItmQty_str)
+                ItmPri = float(ItmQty_str)
+                ExtPri = ItmQty * ItmPri
+
+                # Display each order
+                print(f"{ItmNme:<15}{ItmQty:<10}{ItmPri:<10.2f}{ExtPri:<12.2f}")
+
+                SumExt += ExtPri
+                OrdCnt += 1
+
+            except ValueError:
+                print(f"Skipping invalid line: {line}")
+
+    # Step 3: Display summary
+    print("-" * 50)
+    if OrdCnt > 0:
+        AvgOrd = SumExt / OrdCnt
+        print(f"Total Extended Price: {SumExt:.2f}")
+        print(f"Number of Orders: {OrdCnt}")
+        print(f"Average Order Value: {AvgOrd:.2f}")
+    else:
+        print("No valid orders found.")
+
+except FileNotFoundError:
+    print(f"Error: File '{OrdFile}' not found.")
+except Exception as e:
+    print(f"An unexpected error occurred: {e}")
