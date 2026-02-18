@@ -1,0 +1,19 @@
+#PS7P2
+#Alexander Kazantzis
+#2-17-26
+def FiboSeq(T):
+    if not isinstance(T, int) or T <= 0: #$
+        raise ValueError("A number above zero, please")  #if Zero or negative, ask for a positive.
+    FiboSer = [] #$
+    Trm1,Trm2 = 1,1 #start with 0,1
+    for _ in range(T):
+        FiboSer.append(Trm1)
+        Trm1, Trm2 = Trm2, Trm1+Trm2 # add the previous number in the sequence to the next ad infinitum. #$
+    return FiboSer
+# input and output
+try:
+    TrmCnt = int(input("Number of fibonacci terms: ")) #enter number of terms
+    FiboLst = FiboSeq(TrmCnt) 
+    print(f"Term Count: {TrmCnt} , Fibonacci List: {FiboLst}")
+except ValueError as e:
+    print(f"Error: {e}")
